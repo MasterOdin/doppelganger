@@ -1,0 +1,130 @@
+<html>
+<head>
+    <title>Doppelganger</title>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+    <script>
+        function submitForm() {
+            var message = $("#message").val();
+            try {
+                message = JSON.stringify(JSON.parse(message));
+            }
+            catch (err) {
+                message = $("#message").val();
+            }
+            $.ajax({
+                type: "POST",
+                url: "/post",
+                data: {
+                    message: message,
+                    queue: $("#queue").val()
+                },
+                success: function(data) {
+                    var json = JSON.parse(data);
+                    $("#status").html("<i class='fa fa-check fa-1x' aria-hidden='true'></i> Message delivered. Status: " + json['success']);
+                    setTimeout(function() {
+                        $("#status").html("");
+                    }, 3000);
+                    if (json['success']) {
+                        $("#message").val("");
+                    }
+                }
+            })
+            .error(function() {
+                alert("You need to restart the doppelganger.py process");
+            });
+        }
+
+        function addSampleGesture(gesture) {
+            var obj = null;
+            if (gesture == 'zoom') {
+                obj =
+                {
+                    "timeStamp": "2016-08-26 16.00.00.00",
+                    "cameraID": "gestureMainScreen",
+                    "personID": 1,
+                    "bodyPose": {
+                        "X": 1,
+                        "Y": 0.5,
+                        "Z": 3,
+                        "pitch": "20",
+                        "yaw": "15",
+                        "roll": "8"
+                    },
+                    "gestureType": "zoom",
+                    "parameters": {
+                        "direction": "out",
+                        "factor": 1.5
+                    }
+                };
+            }
+            else {
+                obj =
+                {
+                    "timeStamp": "2016-08-26 16.01.00.00",
+                    "cameraID": "gestureMainScreen",
+                    "personID": 1,
+                    "bodyPose": {
+                        "X": 1,
+                        "Y": 0.5,
+                        "Z": 3,
+                        "pitch": "20",
+                        "yaw": "15",
+                        "roll": "8"
+                    },
+                    "gestureType": "wipe",
+                    "parameters": {
+                        "direction": "left",
+                        "factor": 1
+                    }
+                };
+            }
+            $("#message").val(JSON.stringify(obj, null, 2));
+            $("#queue").val("gesture");
+        }
+
+        function addSampleHeadPose() {
+            var obj =
+            {
+                "timeStamp": "2015-08-25 13.32.56.23",
+                "cameraID": "headPoseLeader",
+                "personID": 1,
+                "poseLabel": "leftSceen",
+                "parameters": {
+                    "X": 15.5,
+                    "Y": 8.5,
+                    "Z": 30,
+                    "pitch": 30,
+                    "yaw": "25",
+                    "roll": "5"
+                }
+            };
+
+            $("#message").val(JSON.stringify(obj, null, 2));
+            $("#queue").val("headPose");
+        }
+    </script>
+    <style>
+        a {
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <form onsubmit="submitForm(); return false;">
+        Message:<br />
+        <textarea id="message" name="message" placeholder="JSON Message" style="height: 200px; width: 1000px; font-size:16px"></textarea>
+        <br />
+        <label for="queue">Queue</label>: <input id="queue" type="text" name="queue" value="hello" style="font-size:16px; width: 600px" />
+        <br />
+        Common Queues:<br />
+        gesture (Sample: <a onclick="addSampleGesture('zoom')">Zoom</a>, <a onclick="addSampleGesture('wipe')">Wipe</a>)<br />
+        &emsp;cameraIDs: gestureMainScreen, gestureSideScreen1<br />
+        headPose (<a onclick="addSampleHeadPose();">Sample</a>)<br />
+        &emsp;cameraIDs: headPoseLeader, headPoseAudience1, headPoseAudience2, headPoseAudience3<br /><br />
+        <input type="submit" value="Submit" />
+    </form>
+
+    <div id="status"></div>
+</body>
+</html>

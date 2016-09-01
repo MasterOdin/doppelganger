@@ -161,38 +161,12 @@ function commandHelp() {
 }
 
 function transcriptShowCompanies() {
-    var obj = {
-        "workerID": "e999fa73-e577-4a9a-a0ef-aa6747c2e902",
-        "channelIndex": 0,
-        "result": {
-            "alternatives": [
-                {
-                    "word_confidence": [
-                        ["Watson", 0.9946844894547195],
-                        ["show", 0.7171658939202544],
-                        ["me", 0.7069206032177959],
-                        ["companies", 0.9935573561991417],
-                        ["with", 0.9906431067408652],
-                        ["revenue", 0.8769511209384738],
-                        ["between", 0.9981212667240013],
-                        ["two", 1],
-                        ["hundred", 0.999999999999971],
-                        ["million", 0.9999999999999727],
-                        ["and", 1],
-                        ["six", 1],
-                        ["hundred", 1],
-                        ["million", 0.9526599887760382],
-                        ["pertaining", 0.9999999999999803],
-                        ["to", 0.9999999999999981],
-                        ["analytics", 0.9946311863613608]
-                    ],
-                    "confidence": 0.969,
-                    "transcript":"Watson show me companies with revenue between 800000000 pertaining to analytics ","timestamps":[["Watson",45.91,46.68],["show",46.72,47.04],["me",47.04,47.18],["companies",47.18,47.98],["with",48.13,48.34],["revenue",48.34,48.7],["between",48.7,49.24],["two",49.37,49.57],["hundred",49.57,49.92],["million",49.92,50.31],["and",50.31,50.56],["six",50.56,50.83],["hundred",50.83,51.13],["million",51.13,51.53],["pertaining",51.56,52.04],["to",52.04,52.16],["analytics",52.16,53.05]]},{"transcript":"Watson Shomi companies with revenue between 800000000 pertaining to analytics "},{"transcript":"Watson show ME companies with revenue between 800000000 pertaining to analytics "}],"final":true},"time_captured":1472757460409,"messageId":"c02f4a90-7078-11e6-bff1-1766b5cdc518"}
+    var obj = {"workerID":"multichannel-transcript-worker","channelIndex":1,"result":{"alternatives":[{"word_confidence":[["Watson",0.85924225880847],["show",0.8674634281529401],["me",0.9796097581773794],["companies",0.9999999999999917],["with",0.9999999999999961],["revenues",1],["less",1],["than",0.8291158431491128],["twenty",1],["five",1],["million",0.7296257910631451],["dollars",1],["pertaining",0.9524881453520598],["to",1],["analytics",0.9641885325384749]],"confidence":0.951,"transcript":"Watson show me companies with revenues less than $25000000 pertaining to analytics ","timestamps":[["Watson",51.1,51.76],["show",52.22,52.47],["me",52.47,52.6],["companies",52.6,53.23],["with",53.23,53.45],["revenues",53.45,54.01],["less",54.01,54.29],["than",54.29,54.5],["twenty",54.5,54.79],["five",54.79,55.11],["million",55.11,55.42],["dollars",55.42,55.98],["pertaining",55.98,56.53],["to",56.53,56.89],["analytics",56.89,57.79]]},{"transcript":"Watson show me companies with revenues less than $25000000000 pertaining to analytics "},{"transcript":"Watson show ME companies with revenues less than $25000000 pertaining to analytics "}],"final":true},"time_captured":1472769943158,"messageId":"d07ba160-7095-11e6-986d-153132c0db00"};
     publish(obj, exchange_topic, topic_transcript);
 }
 
 function commandShowCompanies() {
-    var obj = {  "incoming": "Watson show me companies with revenue between 800000000 pertaining to analytics ",  "timestamp": 1472757460438,  "cmd": {    "action": "show",    "subject": {      "type": "company",      "criteria": {        "concepts": [          "analytics"        ]      }    },    "addressee": "watson"  }};
+    var obj = {  "incoming": "Watson show me companies with revenues less than $25000000 pertaining to analytics ",  "timestamp": 1472769943203,  "cmd": {    "action": "show",    "subject": {      "type": "company",      "criteria": {        "revenue": {          "lt": 25        },        "concepts": [          "analytics"        ]      }    },    "addressee": "watson"  }};
     publish(obj, exchange_topic, topic_command);
 }
 
@@ -277,6 +251,26 @@ function commandGoodbye() {
         }
     };
 
+    publish(obj, exchange_topic, topic_command);
+}
+
+function transcriptSpeaking() {
+    var obj = {"workerID":"multichannel-transcript-worker","channelIndex":1,"result":{"alternatives":[{"word_confidence":[["Watson",0.935072669526874],["this",0.9867708636185509],["is",0.9999999999999937],["Gordon",0.7719061939274812],["speaking",0.9769437001297974]],"confidence":0.918,"transcript":"Watson this is Gordon speaking ","timestamps":[["Watson",146.79,147.33],["this",147.41,147.64],["is",147.64,147.87],["Gordon",147.87,148.39],["speaking",148.39,148.95]]},{"transcript":"what\'s in this is Gordon speaking "},{"transcript":"Watson this is Gordon\'s speaking "}],"final":true},"time_captured":1472770048872,"messageId":"0f7e4e80-7096-11e6-986d-153132c0db00"};
+    publish(obj, exchange_topic, topic_transcript);
+}
+
+function commandSpeaking() {
+    var obj = {  "incoming": "Watson this is Gordon speaking ",  "timestamp": 1472770048889,  "cmd": {    "action": "identify-speaker",    "subject": {      "name": "gordon",      "channelIndex": 1,      "workerID": "multichannel-transcript-worker"    },    "addressee": "watson"  }};
+    publish(obj, exchange_topic, topic_command);
+}
+
+function transcriptExpand() {
+    var obj = {"workerID":"multichannel-transcript-worker","channelIndex":1,"result":{"alternatives":[{"word_confidence":[["Watson",0.9936571937796257],["expand",0.9386999937778991],["the",0.5162790807654241],["window",0.9746961629112513]],"confidence":0.945,"transcript":"Watson expand the window ","timestamps":[["Watson",176.81,177.41],["expand",177.48,178.08],["the",178.08,178.17],["window",178.17,178.62]]},{"transcript":"Watson expand their window "},{"transcript":"Watson expander window "}],"final":true},"speaker":"Gordon Clement","time_captured":1472770059436,"messageId":"15ca3ec0-7096-11e6-986d-153132c0db00"};
+    publish(obj, exchange_topic, topic_transcript);
+}
+
+function commandExpand() {
+    var obj = {  "incoming": "Watson expand the window ",  "timestamp": 1472770059453,  "cmd": {    "action": "expand-window",    "subject": "watson expand the",    "addressee": "watson"  }}
     publish(obj, exchange_topic, topic_command);
 }
 

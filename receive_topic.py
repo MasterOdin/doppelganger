@@ -1,4 +1,9 @@
 #!/usr/bin/env python
+
+"""
+Sample script for monitoring the amq.topic queue
+"""
+
 from __future__ import print_function, unicode_literals
 
 import argparse

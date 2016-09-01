@@ -1,5 +1,5 @@
 <h1>
-<a id="doppelganger" class="anchor" href="#doppelganger" aria-hidden="true"></a><img src="https://code.empac.rpi.edu/CISL/doppelganger/raw/321ed2fdde0a9844eaf6d9bfac10507067df9b7a/static/duality-mask-30.png" alt="doppelganger" style="width: 30px;" /> Doppelganger</h1>__
+<a id="doppelganger" class="anchor" href="#doppelganger" aria-hidden="true"></a><img src="https://code.empac.rpi.edu/CISL/doppelganger/raw/master/static/duality-mask-30.png" alt="doppelganger" style="width: 30px;" /> Doppelganger</h1>__
 
 A flask application that allows an easy interface to push messages to any 
 given RabbitMQ queue on the localhost machine.

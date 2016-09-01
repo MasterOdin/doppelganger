@@ -1,6 +1,5 @@
-Doppelganger
-=============
-![doppelganger](https://code.empac.rpi.edu/CISL/doppelganger/raw/master/static/duality-mask-30.png)
+![doppelganger](static/doppelganger-header.png)
+------
 
 A flask application that allows an easy interface to push messages to any 
 given RabbitMQ queue on the localhost machine.

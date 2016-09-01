@@ -1,4 +1,4 @@
-![doppelganger](https://cdn.rawgit.com/MasterOdin/doppelganger/master/static/doppelganger-header.png)
+![doppelganger](https://cdn.rawgit.com/MasterOdin/doppelganger/9f5bb81f77a6cc8829f10bc257731eabcfbcf85c/static/doppelganger-header.png)
 ------
 
 A flask application that allows an easy interface to push messages to any 

@@ -16,6 +16,7 @@ PARSER.add_argument("-u", "--user", required=False, default=None, type=str,
                     help="User for accessing RabbitMQ")
 PARSER.add_argument("-p", "--password", required=False, default=None, type=str,
                     help="Password for accessing RabbitMQ")
+PARSER.add_argument("-d", "--debug", action='store_true', help="Put Flask into debug mode")
 ARGS = PARSER.parse_args()
 
 APP = Flask(__name__, static_url_path='/static')
@@ -40,4 +41,4 @@ def post():
 
 if __name__ == '__main__':
     PORT = os.getenv('PORT', 5000)
-    APP.run(host='0.0.0.0', port=int(PORT), debug=False)
+    APP.run(host='0.0.0.0', port=int(PORT), debug=ARGS.debug)

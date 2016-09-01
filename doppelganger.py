@@ -40,4 +40,4 @@ def post():
 
 if __name__ == '__main__':
     PORT = os.getenv('PORT', 5000)
-    APP.run(host='0.0.0.0', port=int(PORT), debug=True)
+    APP.run(host='0.0.0.0', port=int(PORT), debug=False)

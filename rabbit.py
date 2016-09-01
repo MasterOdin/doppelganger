@@ -15,8 +15,7 @@ class Rabbit(object):
             credentials = None
         try:
             self.connection = pika.BlockingConnection(
-                pika.ConnectionParameters(host,
-                                          credentials=credentials))
+                pika.ConnectionParameters(host, credentials=credentials))
             self.exchanges = {}  # type: dict[pika.adapters.blocking_connection.BlockingConnection]
             self.queues = {}  # type: dict[pika.adapters.blocking_connection.BlockingConnection]
         except pika.exceptions.IncompatibleProtocolError:
@@ -41,19 +40,21 @@ class Rabbit(object):
                                                        durable=durable)
 
     def publish_message(self, exchange, topic, message):
-        topic_type = "topic" if topic is not None or topic != "" else ""
-        if exchange not in self.queues:
-            self.new_channel(exchange, topic_type)
-        if self.queues[exchange].is_closed:
-            self.new_channel(exchange, topic_type)
-        if topic is None or topic == "":
-            return self.queues[exchange].basic_publish(exchange='',
-                                                       routing_key=exchange,
-                                                       body=message)
-        else:
-            return self.queues[exchange].basic_publish(exchange=exchange,
-                                                       routing_key=topic,
-                                                       body=message)
+        try:
+            topic_type = "topic" if topic is not None or topic != "" else ""
+            if exchange not in self.queues or self.queues[exchange].is_closed:
+                self.new_channel(exchange, topic_type)
+            if topic is None or topic == "":
+                return self.queues[exchange].basic_publish(exchange='',
+                                                           routing_key=exchange,
+                                                           body=message)
+            else:
+                return self.queues[exchange].basic_publish(exchange=exchange,
+                                                           routing_key=topic,
+                                                           body=message)
+        except pika.exceptions.ConnectionClosed as e:
+            self.queues[exchange].close()
+            raise e
 
     def close(self):
         for queue in self.queues:

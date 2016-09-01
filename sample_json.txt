@@ -1,0 +1,54 @@
+amq.topic - far.final.transcript
+{
+    "workerID":"10a8db19-b91a-4503-a313-bbd96fc4b004",
+    "channelIndex":0,
+    "result":
+    {
+        "alternatives":[
+            {
+                "word_confidence":[
+                    ["Watson",0.8677325371085678],
+                    ["I",1],
+                    ["need",1],
+                    ["help",1],
+                    ["with",0.9660581269352028],
+                    ["our",0.3064586909353291],
+                    ["position",0.5162857775942077]
+                ],
+                "confidence":0.752,
+                "transcript":"Watson I need help with our position ",
+                "timestamps":[
+                    ["Watson",5.04,5.5],
+                    ["I",5.5,5.63],
+                    ["need",5.63,5.84],
+                    ["help",5.84,6.06],
+                    ["with",6.06,6.24],
+                    ["our",6.24,6.4],
+                    ["position",6.4,7.08]
+                ]
+            },
+            {
+                "transcript":"Watson I need help with acquisition "
+            },
+            {
+                "transcript":"Watson I need help with the acquisition "
+            }
+        ],
+        "final":true
+    },
+    "time_captured":1472669121212,
+    "messageId":"11eb8fc0-6fab-11e6-a2b2-a980b5543ef5"
+}
+
+[x] 'acquisitions.command':
+{
+    "incoming": "here velvet velvet tunes Watson I need help with acquisitions ",
+    "timestamp": 1472670839104,
+    "cmd": {
+        "action": "help",
+        "subject": {
+            "type": "acquisitions"
+        },
+    "addressee": "watson"
+    }
+}

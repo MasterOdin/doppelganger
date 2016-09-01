@@ -4,24 +4,24 @@ import json
 import os
 
 from flask import Flask, render_template, request
-
 from rabbit import Rabbit
 
-APP = Flask(__name__)
+APP = Flask(__name__, static_url_path='/static')
 
-RABBIT = Rabbit('hello')
+RABBIT = Rabbit()
 
 
 @APP.route('/')
-def hello_world():
+def index():
     return render_template('index.html')
 
 
 @APP.route("/post", methods=["POST"])
 def post():
-    queue = request.values.get('queue').strip()
+    exchange = request.values.get('exchange').strip()
+    topic = request.values.get('topic').strip()
     message = request.values.get('message').strip()
-    return json.dumps({"success": RABBIT.publish_message(queue, message)})
+    return json.dumps({"success": RABBIT.publish_message(exchange, topic, message)})
 
 
 if __name__ == '__main__':

@@ -1,0 +1,45 @@
+input,
+textarea,
+body {
+    font-size: 16px;
+}
+
+a {
+    color: blue;
+}
+#right,
+#left {
+    padding: 10px;
+}
+
+#right {
+    float: right;
+    width: 50%;
+}
+
+#left {
+    width: 50%;
+}
+
+#left div {
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+textarea {
+    width: 90%;
+    height: 400px;
+}
+
+input[type=text] {
+    width: 40%;
+}
+
+#left .title {
+    width: 20%;
+}
+
+#left .input {
+    float:right;
+    width: 80%;
+}

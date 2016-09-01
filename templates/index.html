@@ -11,13 +11,25 @@
     <div id="right">
         Examples:<br />
         transcript:<br />
-        &emsp;<a onclick="transcriptHelp()">help</a>, <a onclick="transcriptGoodbye()">goodbye</a><br />
+        &emsp;<a onclick="transcriptHelp()">help</a>,
+        <a onclick="transcriptShowCompanies()">show</a>,
+        <a onclick="transcriptInformationCompany()">information</a>,
+        <a onclick="transcriptWebsiteCompany()">website</a>,
+        <a onclick="transcriptHighlightCompany()">highlight</a>,
+        <a onclick="transcriptGoodbye()">goodbye</a><br />
         parser:<br />
-        &emsp;<a onclick="commandHelp()">help</a>, <a onclick="commandGoodbye()">goodbye</a><br />
+        &emsp;<a onclick="commandHelp()">help</a>,
+        <a onclick="commandShowCompanies()">show</a>,
+        <a onclick="commandInformationCompany()">information</a>,
+        <a onclick="commandWebsiteCompany()">website</a>,
+        <a onclick="commandHighlightCompany()">highlight</a>,
+        <a onclick="commandGoodbye()">goodbye</a><br />
         gesture (Sample: <a onclick="addSampleGesture('zoom')">Zoom</a>, <a onclick="addSampleGesture('wipe')">Wipe</a>)<br />
         &emsp;cameraIDs: gestureMainScreen, gestureSideScreen1<br />
         headPose (<a onclick="addSampleHeadPose();">Sample</a>)<br />
-        &emsp;cameraIDs: headPoseLeader, headPoseAudience1, headPoseAudience2, headPoseAudience3<br /><br />
+        &emsp;cameraIDs: headPoseLeader, headPoseAudience1, headPoseAudience2, headPoseAudience3<br />
+        position (<a onclick="samplePositionTracker()">Sample</a>)<br />
+
     </div>
     <div id="left">
         <form onsubmit="submitForm(); return false;">

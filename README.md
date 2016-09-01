@@ -48,6 +48,11 @@ python receive_topic.py [topic_name1] [topic_name2]
 where you can type one or more topics to subscribe to on the `amq.topics`
 exchange.
 
+## License
+The project is served under the MIT license which can be viewed under the LICENSE.md file.
+
 ## Icon/Logo
-The icon is the [Duality mask icon](http://game-icons.net/lorc/originals/duality-mask.html) by 
-[Lorc](http://lorcblog.blogspot.com/) under [CC BY 3.0](http://creativecommons.org/licenses/by/3.0/)
+The icon uses [Mirror mirror icon](http://game-icons.net/lorc/originals/mirror-mirror.html) by 
+[Lorc](http://lorcblog.blogspot.com/) under [CC BY 3.0](http://creativecommons.org/licenses/by/3.0/) and 
+[Rabbit](http://game-icons.net/delapouite/originals/rabbit.html) by [Delapouite](http://delapouite.com/) under 
+[CC BY 3.0](CC BY 3.0).

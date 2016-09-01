@@ -11,14 +11,21 @@ import pika
 import sys
 
 parser = argparse.ArgumentParser(description='Process to watch a RabbitMQ queue')
-parser.add_argument('topic', type=str, help='RabbitMQ topic to suscribe to')
 
-connection = pika.BlockingConnection(
-    pika.ConnectionParameters(
-        host='128.113.21.131',
-        credentials=pika.PlainCredentials('cisl-cog', 'cisl-cog')
+if False:
+    connection = pika.BlockingConnection(
+        pika.ConnectionParameters(
+            host='128.113.21.131',
+            credentials=pika.PlainCredentials('cisl-cog', 'cisl-cog')
+        )
     )
-)
+else:
+    connection = pika.BlockingConnection(
+        pika.ConnectionParameters(
+            host='localhost'
+        )
+    )
+
 channel = connection.channel()
 
 channel.exchange_declare(exchange='amq.topic',

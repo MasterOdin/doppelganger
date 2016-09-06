@@ -39,15 +39,15 @@
         <form onsubmit="submitForm(); return false;">
             <div>
                 Message:<br />
-                <textarea id="message" name="message" placeholder="JSON Message"></textarea>
+                <textarea id="message" name="message" placeholder="JSON Message">Hello World</textarea>
             </div>
             <div>
-                <div class="input"><input id="exchange" type="text" name="exchange" /></div>
+                <div class="input"><input id="exchange" type="text" name="exchange" placeholder="exchange" /></div>
                 <div class="title"><label for="exchange">Exchange</label>:</div>
             </div>
             <div>
-                <div class="input"><input id="topic" type="text" name="topic" value="hello" /></div>
-                <div class="title"><label for="topic">Topic</label>:</div>
+                <div class="input"><input id="topic" type="text" name="topic" placeholder="topic/queue" value="hello" /></div>
+                <div class="title"><label for="topic">Topic/Queue</label>:</div>
             </div>
             <input type="submit" value="Submit" />
         </form>

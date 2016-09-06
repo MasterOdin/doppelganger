@@ -13,7 +13,6 @@ class Rabbit(object):
         self.user = user
         self.password = password
         self.connection = None
-        self.exchanges = {}  # type: dict[pika.adapters.blocking_connection.BlockingConnection]
         self.queues = {}  # type: dict[pika.adapters.blocking_connection.BlockingConnection]
         self.connect()
 
@@ -25,17 +24,10 @@ class Rabbit(object):
         try:
             self.connection = pika.BlockingConnection(
                 pika.ConnectionParameters(self.host, credentials=credentials))
-        except pika.exceptions.IncompatibleProtocolError:
-            print("Error Starting. You need to restart the RabbitMQ server on the host machine.")
+        except (pika.exceptions.IncompatibleProtocolError, pika.exceptions.ConnectionClosed):
+            raise SystemExit("Error Starting. Please start or restart the RabbitMQ server.")
 
     def new_channel(self, exchange, topic_type='topic', durable=True):
-        """
-
-        :param exchange:
-        :param topic_type:
-        :param durable:
-        :return:
-        """
         if exchange not in self.queues:
             if topic_type is None or topic_type == "":
                 self.queues[exchange] = self.connection.channel()
@@ -46,21 +38,38 @@ class Rabbit(object):
                                                        type=topic_type,
                                                        durable=durable)
 
-    def publish_message(self, exchange, topic, message):
+    def publish_message(self, exchange, topic, message, retry=True):
+        try:
+            return self._publish(exchange, topic, message)
+        except pika.exceptions.ConnectionClosed:
+            if retry:
+                self.disconnect()
+                self.connect()
+                return self.publish_message(exchange, topic, message, False)
+            else:
+                return False
+
+    def _publish(self, exchange, topic, message):
         if self.connection.is_closed:
             self.connect()
-        topic_type = "topic" if topic is not None or topic != "" else ""
-        if exchange not in self.queues or self.queues[exchange].is_closed:
-            self.new_channel(exchange, topic_type)
-        if topic is None or topic == "":
-            return self.queues[exchange].basic_publish(exchange='',
-                                                       routing_key=exchange,
-                                                       body=message)
+        topic_type = "topic" if exchange is not None and exchange != "" else ""
+        if exchange is None or exchange == "":
+            use_exchange = ""
+            queue = topic
         else:
-            return self.queues[exchange].basic_publish(exchange=exchange,
-                                                       routing_key=topic,
-                                                       body=message)
+            use_exchange = exchange
+            queue = exchange
+        if queue not in self.queues or self.queues[queue].is_closed:
+            self.new_channel(queue, topic_type)
+        return self.queues[queue].basic_publish(exchange=use_exchange,
+                                                routing_key=topic,
+                                                body=message)
 
-    def close(self):
-        for queue in self.queues:
-            self.queues[queue].close()
+    def disconnect(self):
+        try:
+            self.connection.close()
+        except pika.exceptions.ConnectionClosed:
+            # connection already closed
+            pass
+        self.queues = {}
+        self.connection = None

@@ -21,7 +21,11 @@ function submitForm() {
         },
         success: function(data) {
             var json = JSON.parse(data);
-            $("#status").html("<i class='fa fa-check fa-1x' aria-hidden='true'></i> Message delivered. Status: " + json['success']);
+            var worked = "<i style='color: darkgreen' class='fa fa-check fa-1x' aria-hidden='true'></i>";
+            if (!json['success']) {
+                worked = "<i style='color: darkred' class='fa fa-times fa-1x' aria-hidden='true'></i>";
+            }
+            $("#status").html("Message attempt to send. Status: " + worked);
             setTimeout(function() {
                 $("#status").html("");
             }, 3000);
@@ -30,7 +34,7 @@ function submitForm() {
             }
         },
         error: function() {
-            alert("Error trying to communicate with RabbitMQ.");
+            alert("Error communicating, please restart RabbitMQ and doppelganger");
         }
     });
 }
@@ -281,7 +285,7 @@ function samplePositionTracker() {
             "Person ID": "0",
             "Pose": "1",
             "Parameters": {
-                "LocationX": "1439.98",
+                "LocationX": "1422.98",
                 "LocationY": "540.835"
             }
         },

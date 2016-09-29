@@ -12,7 +12,7 @@ import sys
 
 parser = argparse.ArgumentParser(description='Process to watch a RabbitMQ queue')
 
-if False:
+if True:
     connection = pika.BlockingConnection(
         pika.ConnectionParameters(
             host='128.113.21.131',
@@ -30,7 +30,6 @@ channel.exchange_declare(exchange='amq.topic',
 
 result = channel.queue_declare(exclusive=False)
 queue_name = result.method.queue
-
 binding_keys = sys.argv[1:]
 if not binding_keys:
     sys.stderr.write("Usage: %s [binding_key]...\n" % sys.argv[0])

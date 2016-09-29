@@ -31,7 +31,7 @@ class Rabbit(object):
         if exchange not in self.queues:
             if topic_type is None or topic_type == "":
                 self.queues[exchange] = self.connection.channel()
-                self.queues[exchange].queue_declare(queue=exchange)
+                #self.queues[exchange].queue_declare(queue=exchange)
             else:
                 self.queues[exchange] = self.connection.channel()
                 self.queues[exchange].exchange_declare(exchange=exchange,

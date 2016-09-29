@@ -1,0 +1,10 @@
+{
+        "run": "python",
+        "args": ["doppelganger.py"],
+        "watcher": "http://localhost:7777",
+        "id": "doppelganger",
+        "description": "Doppelganger",
+        "tags": ["doppelganger"],
+        "log": "fls001.log"
+
+}

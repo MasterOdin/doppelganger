@@ -1,0 +1,52 @@
+<html>
+<head>
+    <title>Doppelganger Transcript</title>
+    <link rel="icon" type="image/png" href="/static/favicon.ico">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/script.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="/static/style.css" />
+    <script type="text/javascript">
+    function processForm() {
+        var phrase = $("#message").val().match(/\S+/g) || [];
+        var old = $("#message").val();
+        if (phrase.length == 0) {
+            return;
+        }
+        var words = []
+        phrase.forEach(function(p) {
+            words.push([p, 1])
+        });
+
+        var obj = {
+            "workerID": "multichannel-transcript-worker",
+            "channelIndex": parseInt($("#channel").val()),
+            "result": {
+                "alternatives": [
+                    {
+                        "word_confidence": phrase,
+                        "confidence": 1,
+                        "transcript": $("#message").val(),
+                    }
+                ],
+                "final": true},
+            "time_captured": 1472670839062,
+            "messageId": "11d6ab60-6faf-11e6-8cfd-fb11aeacedf0"
+        };
+        _submit(JSON.stringify(obj), 'amq.topic', 'far.final.transcript');
+        $("#message").val(old);
+    }
+    </script>
+</head>
+<body>
+<form onsubmit="processForm(); return false;">
+    <div>
+        Message: <input id='message' type='text' name='message' placeholder='String' /> <br />
+        Channel: <input id='channel' style='width: 100px' text='text' name='Channel' placeholder='Channel' />
+    </div>
+    <input type="submit" value="Submit" />
+</form>
+
+<div id="status"></div>
+</body>
+</html>

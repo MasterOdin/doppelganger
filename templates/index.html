@@ -15,6 +15,7 @@
         <a onclick="transcriptShowCompanies()">show</a>,
         <a onclick="transcriptInformationCompany()">information</a>,
         <a onclick="transcriptWebsiteCompany()">website</a>,
+        <a onclick="transcriptLocationCompany()">location</a>,
         <a onclick="transcriptHighlightCompany()">highlight</a>,
         <a onclick="transcriptSpeaking()">gordon speaking</a>,
         <a onclick="transcriptExpand()">expand</a>,
@@ -24,16 +25,20 @@
         <a onclick="commandShowCompanies()">show</a>,
         <a onclick="commandInformationCompany()">information</a>,
         <a onclick="commandWebsiteCompany()">website</a>,
+        <a onclick="commandLocationCompany()">location</a>,
         <a onclick="commandHighlightCompany()">highlight</a>,
         <a onclick="commandSpeaking()">gordon speaking</a>,
         <a onclick="commandExpand()">expand</a>,
+        <a onclick="commandShowWelcome()">show welcome</a>,
+        <a onclick="commandDestroyWelcome()">destroy welcome</a>,
+        <a onclick="commandMom()">show mom</a>,
         <a onclick="commandGoodbye()">goodbye</a><br />
         gesture (Sample: <a onclick="addSampleGesture('zoom')">Zoom</a>, <a onclick="addSampleGesture('wipe')">Wipe</a>)<br />
         &emsp;cameraIDs: gestureMainScreen, gestureSideScreen1<br />
         headPose (<a onclick="addSampleHeadPose();">Sample</a>)<br />
         &emsp;cameraIDs: headPoseLeader, headPoseAudience1, headPoseAudience2, headPoseAudience3<br />
         position (<a onclick="samplePositionTracker()">Sample</a>)<br />
-
+        speak (<a onclick="sampleSpeak()">Sample</a>)<br />
     </div>
     <div id="left">
         <form onsubmit="submitForm(); return false;">

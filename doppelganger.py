@@ -39,6 +39,15 @@ def post():
     return json.dumps({"success": RABBIT.publish_message(exchange, topic, message)})
 
 
+@APP.route("/transcript")
+def transcript():
+    return render_template("transcript.html")
+
+
+@APP.route('/speak')
+def speak():
+    return render_template("speak.html")
+    
 if __name__ == '__main__':
     PORT = os.getenv('PORT', 5000)
     APP.run(host='0.0.0.0', port=int(PORT), debug=ARGS.debug)

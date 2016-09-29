@@ -1,6 +1,7 @@
 var exchange_topic = 'amq.topic';
 var topic_transcript = 'far.final.transcript';
 var topic_command = 'acquisitions.command';
+var topic_speak = 'begin.speak';
 
 function submitForm() {
     var message_id = $("#message");
@@ -11,13 +12,18 @@ function submitForm() {
     catch (err) {
         message = message_id.val();
     }
+    _submit(message, $("#exchange").val(), $("#topic").val());
+}
+
+function _submit(message, exchange, topic) {
+
     $.ajax({
         type: "POST",
         url: "/post",
         data: {
             message: message,
-            exchange: $("#exchange").val(),
-            topic: $("#topic").val()
+            exchange: exchange,
+            topic: topic
         },
         success: function(data) {
             var json = JSON.parse(data);
@@ -30,7 +36,7 @@ function submitForm() {
                 $("#status").html("");
             }, 3000);
             if (json['success']) {
-                $("#message").val("");
+                //$("#message").val("");
             }
         },
         error: function() {
@@ -84,7 +90,7 @@ function addSampleGesture(gesture) {
         };
     }
 
-    publish(obj, "", "gesture");
+    publish(obj, exchange_topic, "gesture");
 }
 
 function addSampleHeadPose() {
@@ -193,6 +199,16 @@ function transcriptWebsiteCompany() {
 
 function commandWebsiteCompany() {
     var obj = {  "incoming": "Watson show me the website for the company name red door interactive\'s ",  "timestamp": 1472757491395,  "cmd": {    "action": "show",    "subject": {      "type": "website",      "criteria": {        "names": [          "red door interactive"        ]      }    },    "addressee": "watson"  }};
+    publish(obj, exchange_topic, topic_command);
+}
+
+function transcriptLocationCompany() {
+    var obj = {"workerID":"e999fa73-e577-4a9a-a0ef-aa6747c2e902","channelIndex":0,"result":{"alternatives":[{"word_confidence":[["Watson",0.8323861770687634],["show",0.8142837837452106],["me",0.9571424116336237],["the",1],["website",0.8207901520232352],["for",0.932119606582468],["the",1],["company",1],["name",0.6141803996986658],["red",0.8910448392948825],["door",1],["interactive",0.8343061601681865]],"confidence":0.857,"transcript":"Watson show me the location for the company name red door interactive\'s ","timestamps":[["Watson",79.45,80],["show",80.03,80.28],["me",80.28,80.41],["the",80.41,80.53],["website",80.53,81.08],["for",81.08,81.23],["the",81.23,81.32],["company",81.32,81.72],["name",81.72,82.14],["red",82.37,82.65],["door",82.65,82.97],["interactive\'s",82.97,83.9]]},{"transcript":"Watson show me the website for the company name red door interactives "},{"transcript":"Watson show me the website for the company named red door interactive\'s "}],"final":true},"time_captured":1472757491368,"messageId":"d2a34280-7078-11e6-bff1-1766b5cdc518"};
+    publish(obj, exchange_topic, topic_transcript);
+}
+
+function commandLocationCompany() {
+    var obj = {  "incoming": "Watson show me the location for the company name red door interactive",  "timestamp": 1472757491395,  "cmd": {    "action": "show",    "subject": {      "type": "location",      "criteria": {        "names": [          "red door interactive"        ]      }    },    "addressee": "watson"  }};
     publish(obj, exchange_topic, topic_command);
 }
 
@@ -310,6 +326,54 @@ function samplePositionTracker() {
     ];
 
     publish(obj, exchange_topic, 'persontracker');
+}
+
+function commandShowWelcome() {
+    var obj = {
+        "incoming": "Watson show the welcome screen",
+        "timestamp": 1472670839104,
+        "cmd": {
+            "action": "show-welcome",
+            "addressee": "watson"
+        }
+    };
+
+    publish(obj, exchange_topic, topic_command);
+}
+
+function commandDestroyWelcome() {
+    var obj = {
+        "incoming": "Watson destroy the welcome screen",
+        "timestamp": 1472670839104,
+        "cmd": {
+            "action": "destroy-welcome",
+            "addressee": "watson"
+        }
+    };
+
+    publish(obj, exchange_topic, topic_command);
+}
+
+function commandMom() {
+    var obj = {
+        "incoming": "Watson show the mind of the machine",
+        "timestamp": 1472670839104,
+        "cmd": {
+            "action": "show-mom",
+            "addressee": "watson"
+        }
+    };
+
+    publish(obj, exchange_topic, topic_command);
+}
+
+function sampleSpeak() {
+    var obj = {
+        "text":"Goodbye. Have a nice day!",
+        "voice":"en-US_LisaVoice"
+    };
+
+    publish(obj, "", 'text.speaker.command');
 }
 
 function publish(message, exchange, topic) {
